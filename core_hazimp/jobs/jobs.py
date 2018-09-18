@@ -582,7 +582,7 @@ class LoadRaster(Job):
     # pylint: disable=R0913
     def __call__(self, context, attribute_label,
                  clip_exposure2all_hazards=False,
-                 file_list=None,
+                 file_list=None, file_format=None, variable=None,
                  raster=None, upper_left_x=None, upper_left_y=None,
                  cell_size=None, no_data_value=None):
         """
@@ -596,6 +596,9 @@ class LoadRaster(Job):
             clippped to the hazard data, so no hazard values are ignored.
 
         :param file_list: A list of files or a single file to be loaded.
+        :param fmt: A string representation of the data format: 'nc' for netcdf,
+                    'tif' for geotiff, 'asc' for ascii grid
+        :param variable: Name of the variable in a netcdf-format file (fmt='nc')
         OR
         :param raster: A 2D numeric array of the raster values, North is up.
         :param upper_left_x: The longitude at the upper left corner.

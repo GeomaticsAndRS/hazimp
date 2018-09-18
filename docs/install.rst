@@ -40,6 +40,7 @@ Windows users can use `pip` to install and/or update libraries::
   pip install --user pandas
   pip install --user nose
   pip install --user coverage
+  pip install --user gdal
 
 
 Environment variables
