@@ -268,7 +268,7 @@ def _wind_nc_reader(config_list):
     vul_filename = os.path.join(misc.RESOURCE_DIR, 
                                 find_atts(config_list, VULNFILE))
     add_job(job_insts, LOADXMLVULNERABILITY, {'file_name': vul_filename})
-    import pdb; pdb.set_trace()
+
     # The column title in the exposure file = 'WIND_VULNERABILITY_FUNCTION_ID'
     atts = {'vul_functions_in_exposure': {
             'domestic_wind_2012':
