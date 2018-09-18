@@ -152,7 +152,7 @@ class TestIntegration(unittest.TestCase):
 
         if parallel.STATE.size == 1:
             results = [0.4, 0.05]
-            actual = context.exposure_att['building_loss']
+            actual = context.exposure_att['building_loss'].values
             self.assertTrue(allclose(actual,
                                      results), 'actual:' + str(actual) +
                             '\n results:' + str(results))

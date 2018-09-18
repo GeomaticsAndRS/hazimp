@@ -337,8 +337,8 @@ class LoadCsvExposure(Job):
             raise RuntimeError(msg)
 
         context.exposure_att = data_frame
-        #for key in data_frame:
-        #    context.exposure_att[key] = data_frame[key].values
+        for key in data_frame:
+            context.exposure_att[key] = data_frame[key].values
 
 
 class LoadXmlVulnerability(Job):
