@@ -23,6 +23,7 @@ import os
 import csv
 from collections import defaultdict
 import inspect
+import logging as log
 
 import numpy
 from numpy.random import random_sample, permutation
@@ -216,11 +217,13 @@ def permutate_att_values(dframe, fields, groupby=None):
              permutated.
 
     """
+    log.debug('Permuting fields: {0}'.format(repr(fields)))
     newdf = dframe.copy()
     if isinstance(fields, str):
         fields = [fields]
 
     if groupby:
+        log.debug('Grouping fields by {0}'.format(groupby))
         for field in fields:
             newdf[field] = \
                 newdf.groupby(groupby)[field].transform(permutation)
@@ -231,7 +234,7 @@ def permutate_att_values(dframe, fields, groupby=None):
     return newdf
 
 def aggregate_loss_atts(dframe, groupby=None, kwargs=None):
-
+    log.info('Aggregating results by: {0}'.format(groupby))
     grouped = dframe.groupby(groupby, as_index=False)
     
     outdf = grouped.agg(kwargs)

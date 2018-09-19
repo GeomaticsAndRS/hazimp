@@ -27,6 +27,8 @@ from core_hazimp import pipeline
 
 import numpy
 
+import logging
+
 # This;
 #  numpy.column_stack((body, only_1d))
 # loses significant figures in numpy1.6
@@ -46,15 +48,25 @@ def start(config_list=None, config_file=None, cont_in=None):
     :param cont_in: Only used in testing. A context instance.
     :returns: The config dictionary.
     """
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s: %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S',
+                        filename='hazimp.log',
+                        filemode='w')
+    log = logging.getLogger()
+    log.info('Started hazimp.py')
     if config_file:
+        log.info('Reading configuration file: {0}'.format(config_file))
         config_list = config.read_config_file(config_file)
 
     if isinstance(config_list, dict):
         msg = "Bad configuration file. \n"
         msg += "Add a dash ( - ) before each variable. e.g. - template: flood"
+        log.exception(msg)
         raise RuntimeError(msg)
 
     if config_list is None:
+        log.exception('No configuration information - exiting')
         raise RuntimeError('No configuration information.')
 
     if cont_in is None:
@@ -62,6 +74,7 @@ def start(config_list=None, config_file=None, cont_in=None):
     calc_jobs = config.instance_builder(config_list)
     the_pipeline = pipeline.PipeLine(calc_jobs)
     the_pipeline.run(cont_in)
+    log.info('Finished hazimp.py')
     return cont_in
 
 ############################################################################

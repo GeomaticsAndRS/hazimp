@@ -39,6 +39,7 @@ import sys
 import scipy
 import pandas as pd
 import numpy as np
+import logging as log
 
 from core_hazimp import parallel
 from core_hazimp import misc
@@ -307,6 +308,7 @@ class LoadCsvExposure(Job):
             key: column titles
             value: column values, except the title
         """
+        log.info('Loading exposure data from: {0}'.format(file_name))
         data_frame = parallel.csv2dict(file_name, use_parallel=use_parallel)
         # FIXME Need to do better error handling
         # FIXME this function can only be called once.
@@ -492,6 +494,7 @@ class LookUp(Job):
                 vulnerability_set_id = vuln_curve.vulnerability_set_id
                 msg = 'Invalid intensity measure, %s. \n' % int_measure
                 msg += 'vulnerability_set_id is %s. \n' % vulnerability_set_id
+                log.exception(msg)
                 raise RuntimeError(msg)
 
             losses = vuln_curve.look_up(intensities)
@@ -526,6 +529,8 @@ class PermutateExposure(Job):
                 key - intensity measure
                 value - realised vulnerability curve instance per asset
         """
+        log.info('Running permutations of exposure and vulnerability')
+        log.debug('Permutating {0} times'.format(iterations))
         field = context.vul_function_titles['domestic_wind_2012']
         losses = np.zeros((iterations, len(context.exposure_att)))
         for n in range(iterations):
@@ -545,6 +550,7 @@ class PermutateExposure(Job):
                     vulnerability_set_id = vuln_curve.vulnerability_set_id
                     msg = 'Invalid intensity measure, %s. \n' % int_measure
                     msg += 'vulnerability_set_id is %s. \n' % vulnerability_set_id
+                    log.exception(msg)
                     raise RuntimeError(msg)
 
                 losses[n, :] = vuln_curve.look_up(intensities)
@@ -615,6 +621,7 @@ class LoadRaster(Job):
 
         # We need a file or a full set of raster info.
         if file_list is None:
+            log.info('Loading raster from array')
             # The raster info is being passed as an array
             assert raster is not None
             assert upper_left_x is not None
@@ -641,7 +648,12 @@ class LoadRaster(Job):
             context.exposure_att[attribute_label] = file_data
         else:
             if isinstance(file_list, basestring):
+                log.info('Loading raster file: {0}'.format(file_list))
                 file_list = [file_list]
+            else:
+                log.info('Loading a collection of rasters')
+                for f in file_list:
+                    log.debug('{0}'.format(f))
             file_data, extent = raster_module.files_raster_data_at_points(
                 context.exposure_long,
                 context.exposure_lat, file_list)
