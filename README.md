@@ -3,7 +3,11 @@ HazImp
 
 A natural hazard impact assessment tool.
 
-This branch enables users to permute attributes in the exposure database for randomised evaluation of impacts. e.g. one can permute the vulnerability curves assigned to each exposure element in a grouping (such as suburb) to develop a distribution of impact outcomes. 
+This branch enables users to permute attributes in the exposure
+database for randomised evaluation of impacts. e.g. one can permute
+the vulnerability curves assigned to each exposure element in a
+grouping (such as suburb) to develop a distribution of impact
+outcomes.
 
 Requires pandas (provides methods for manipulation of the exposure file).
 
@@ -24,20 +28,26 @@ Local install on rhe-compute1
 
 Environment variables
 =====================
+
 Add the location of the root HazImp directory to PYTHONPATH. e.g. (in .bashrc)
-export PYTHONPATH=${HOME}/sandpits/hazimp
+export PYTHONPATH=${HOME}/hazimp
 
 Data
-====
-All exposure and hazard data under version control is for testing purposes only and should not be considered as realistic.  The provenance for this data is unknown.
+==== 
+
+All exposure and hazard data under version control is for
+testing purposes only and should not be considered as realistic.  The
+provenance for this data is unknown.
 
 Contributing code
 =================
 
-Generally, development of new functionality and bug fixes happens in the `develop` branch in HazImp. 
-The `master` branch is only for significant releases, and maintenance. Even then, any bug-fixes 
-should follow the procedure outlined below to contribute fixes - that is, create a new (temporary) branch, 
-make the fix, then submit teh fix as a pull request. Once the pull request has been approved and merged, 
+Generally, development of new functionality and bug fixes happens in
+the `develop` branch in HazImp.  The `master` branch is only for
+significant releases, and maintenance. Even then, any bug-fixes should
+follow the procedure outlined below to contribute fixes - that is,
+create a new (temporary) branch, make the fix, then submit teh fix as
+a pull request. Once the pull request has been approved and merged,
 the temporary branch can be deleted.
 
 The preferred way to contribute to HazImp is to fork the 
@@ -95,7 +105,7 @@ tools:
 
 -  Code with good unittest coverage, check with::
 
-          $ pip install nose coverage
+          $ pip install nose coverage --user
           $ nosetests --with-coverage path/to/tests_for_package
 
 -  No pyflakes warnings, check with::
@@ -128,10 +138,10 @@ other issues.
 Documentation
 -------------
 
-We are in the process of creating sphinx based documentation for TCRM. 
+We are in the process of creating sphinx based documentation for HazImp. 
 Any help in setting this up will be gratefully accepted!
 
-At present you will find the user_manual in the doc folder. 
+At present you will find the user_manual in the docs folder. 
 
 We are glad to accept any sort of documentation: function docstrings,
 reStructuredText documents (like this one), tutorials, etc.
