@@ -4,6 +4,7 @@ nosetest*
 .idea/
 _build/
 
+*.log
 debug.log
 *.~*~
 #*#
