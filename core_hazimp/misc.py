@@ -234,6 +234,37 @@ def permutate_att_values(dframe, fields, groupby=None):
     return newdf
 
 def aggregate_loss_atts(dframe, groupby=None, kwargs=None):
+    """Given a :class:`pandas.DataFrame`, group by the `groupby` column,
+    then apply the aggregation functions specified by the `kwargs`
+    argument.
+
+    The `kwargs` argument must take the form of a dict, with
+    keys as the column names to aggregate and values a list of the 
+    functions to apply to that column.
+
+    e.g. if `kwargs` is set to the following:
+
+    - aggregation:
+       groupby: SA1_CODE
+       kwargs: 
+          structural_loss_ratio: [mean, std]
+
+    The aggregated output will calculate mean and standard deviation 
+    of the `structural_loss_ratio` field.
+
+    :param groupby: Used to determine the groups for the groupby. If
+    `groupby` is a function, it’s called on each value of the object’s
+    index. If a :class:`dict` or :class:`pandas.Series` is passed, the
+    :class:`pandas.Series` or :class:`dict` VALUES will be used to
+    determine the groups (the Series’ values are first aligned; see
+    .align() method). If an ndarray is passed, the values are used
+    as-is determine the groups. A label or list of labels may be
+    passed to group by the columns in self. Notice that a tuple is
+    interpreted a (single) key.
+
+    :param dict kwargs: dict of column names -> functions
+
+    """
     log.info('Aggregating results by: {0}'.format(groupby))
     grouped = dframe.groupby(groupby, as_index=False)
     
