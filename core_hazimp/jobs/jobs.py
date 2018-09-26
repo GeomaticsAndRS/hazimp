@@ -64,6 +64,7 @@ CELLJOIN = 'cell_join'
 RANDOM_CONSTANT = 'random_constant'
 PERMUTATE_EXPOSURE = 'permutate_exposure'
 AGGREGATE_LOSS = 'aggregate_loss'
+MERGEAGG = 'merge_aggregation'
 
 class Job(object):
 
@@ -721,6 +722,28 @@ class SaveAggregation(Job):
         """
         context.save_exposure_aggregation(file_name, 
                                           use_parallel=use_parallel)
+
+class MergeAggregation(Job):
+    
+    def __init__(self):
+        super(MergeAggregation, self).__init__()
+        self.call_funct = MERGEAGG
+
+    def __call__(self, context, shapefile=None, zonekey=None):
+        """
+        Merge the aggregation result with a shape file that contains
+        features corresponding to the aggregation areas.
+
+        e.g. if the impact output is aggregated by meshblock, then join
+        the data to a shapefile containing meshblock features, to
+        allow the data to be displayed in a GIS application.
+        
+        :param context: The context instance, used to move data around.
+        :param shapefile: Path to the shape file containing zone features.
+        :param zonekey: Attribute in the zone shape file that matches the
+                        zones used in the aggregation stage.
+        """
+        pass
 # ____________________________________________________
 # ----------------------------------------------------
 #                KEEP THIS AT THE END
